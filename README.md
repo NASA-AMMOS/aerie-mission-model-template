@@ -10,13 +10,13 @@ This repo provides an Aerie mission model template for a fictitious mission call
   brew install --cask temurin
   ```
 
-  Make sure you update your `JAVA_HOME` environment variable. For example with [Zsh](https://www.zsh.org/) you can set your `.zshrc` to:
+  Make sure you update your `JAVA_HOME` environment variable. For example with [Zsh](https://www.zsh.org/) you can update your `.zshrc` with:
 
   ```sh
   export JAVA_HOME="/Library/Java/JavaVirtualMachines/temurin-19.jdk/Contents/Home"
   ```
 
-- Set `GITHUB_USERNAME` and `GITHUB_TOKEN` environment variables so you can download the Aerie Maven packages from the [GitHub Maven package registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry). For example with Zsh you can set your `.zshrc`:
+- Set `GITHUB_USERNAME` and `GITHUB_TOKEN` environment variables so you can download the Aerie Maven packages from the [GitHub Maven package registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry). For example with Zsh you can update your `.zshrc` with:
 
   ```sh
   export GITHUB_USERNAME=""
@@ -25,15 +25,17 @@ This repo provides an Aerie mission model template for a fictitious mission call
 
 ## Building
 
-To build a mission model JAR you can upload into Aerie you can do:
+To build a mission model JAR you can do:
 
 ```sh
 ./gradlew build # Outputs 'build/libs/firesat.jar'
 ```
 
+You can then upload the JAR to Aerie either using the UI or API.
+
 ## Testing
 
-To run unit tests under [src/test](./src/test) against your mission model you can do:
+To run unit tests under [./src/test](./src/test) against your mission model you can do:
 
 ```sh
 ./gradlew test
