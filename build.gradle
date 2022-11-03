@@ -1,0 +1,47 @@
+plugins {
+  id 'java-library'
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(19)
+  }
+}
+
+// The runtime environment this JAR will be deployed to doesn't know what this model depends on.
+// So the generated JAR must include its dependencies. (Except `merlin-sdk`, which is marked `compileTimeApi` by
+// `merlin-framework`, so that the runtime system and model JAR can agree on the same interfaces.)
+jar {
+  from {
+    configurations.runtimeClasspath.filter{ it.exists() }.collect{ it.isDirectory() ? it : zipTree(it) }
+  } {
+    exclude 'META-INF/LICENSE.txt', 'META-INF/LICENSE', 'META-INF/NOTICE.txt', 'META-INF/NOTICE', 'META-INF/versions/11/module-info.class'
+  }
+}
+
+repositories {
+  flatDir { dirs "$rootDir/third-party" }
+  mavenCentral()
+  maven {
+      name = "GitHubPackages"
+      url = "https://maven.pkg.github.com/nasa-ammos/aerie"
+        credentials {
+          username = System.getenv('GITHUB_USERNAME')
+          password = System.getenv('GITHUB_TOKEN')
+        }
+    }
+}
+
+tasks.named('test') {
+  useJUnitPlatform()
+}
+
+dependencies {
+  annotationProcessor 'gov.nasa.jpl.aerie:merlin-framework-processor:+'
+  implementation 'gov.nasa.jpl.aerie:contrib:+'
+  implementation 'gov.nasa.jpl.aerie:merlin-framework:+'
+  implementation 'gov.nasa.jpl.aerie:merlin-sdk:+'
+  implementation 'gov.nasa.jpl.aerie:parsing-utilities:+'
+  testImplementation 'gov.nasa.jpl.aerie:merlin-framework-junit:+'
+  testImplementation 'org.junit.jupiter:junit-jupiter:+'
+}

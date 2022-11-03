@@ -1,0 +1,2 @@
+rootProject.name = 'firesat'
+include('src')
