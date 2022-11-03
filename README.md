@@ -31,7 +31,7 @@ To build a mission model JAR you can do:
 ./gradlew build # Outputs 'build/libs/firesat.jar'
 ```
 
-You can then upload the JAR to Aerie either using the UI or API.
+You can then upload the JAR to Aerie using either the UI or API.
 
 ## Testing
 
