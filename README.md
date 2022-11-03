@@ -1,6 +1,6 @@
 # Aerie Mission Model Template
 
-This repo provides an Aerie mission model template for a fictitious mission called Firesat. It is meant as a starting point for building a new mission model in Aerie.
+This repo provides an Aerie mission model template for a fictitious mission called Firesat (inspired from the book [Space Mission Engineering: The New SMAD](http://www.sme-smad.com/)). It is meant as a starting point for building a new mission model in Aerie.
 
 ## Prerequisites
 
