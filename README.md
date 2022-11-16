@@ -28,7 +28,7 @@ This repo provides an Aerie mission model template for a fictitious mission call
 To build a mission model JAR you can do:
 
 ```sh
-./gradlew build # Outputs 'build/libs/firesat.jar'
+./gradlew build --refresh-dependencies # Outputs 'build/libs/firesat.jar'
 ```
 
 You can then upload the JAR to Aerie using either the UI or API.
