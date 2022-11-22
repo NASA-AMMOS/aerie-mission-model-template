@@ -1,0 +1,170 @@
+# This is a Docker Compose file meant to quickly run Aerie with no external files.
+# It should be primarily used locally and not for production deployments.
+
+version: "3.7"
+services:
+  aerie_gateway:
+    container_name: aerie_gateway
+    depends_on: ["postgres"]
+    environment:
+      AUTH_TYPE: none
+      GQL_API_URL: http://localhost:8080/v1/graphql
+      LOG_FILE: console
+      LOG_LEVEL: warn
+      PORT: 9000
+      POSTGRES_AERIE_MERLIN_DB: aerie_merlin
+      POSTGRES_HOST: postgres
+      POSTGRES_PASSWORD: aerie
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: aerie
+    image: "ghcr.io/nasa-ammos/aerie-gateway:develop"
+    ports: ["9000:9000"]
+    restart: always
+    volumes:
+      - aerie_file_store:/app/files
+  aerie_merlin:
+    container_name: aerie_merlin
+    depends_on: ["postgres"]
+    environment:
+      JAVA_OPTS: >
+        -Dorg.slf4j.simpleLogger.defaultLogLevel=WARN
+        -Dorg.slf4j.simpleLogger.logFile=System.err
+      MERLIN_DB: "aerie_merlin"
+      MERLIN_DB_PASSWORD: aerie
+      MERLIN_DB_PORT: 5432
+      MERLIN_DB_SERVER: postgres
+      MERLIN_DB_USER: aerie
+      MERLIN_LOCAL_STORE: /usr/src/app/merlin_file_store
+      MERLIN_PORT: 27183
+      UNTRUE_PLAN_START: "2000-01-01T11:58:55.816Z"
+    image: "ghcr.io/nasa-ammos/aerie-merlin:develop"
+    ports: ["27183:27183"]
+    restart: always
+    volumes:
+      - aerie_file_store:/usr/src/app/merlin_file_store
+  aerie_merlin_worker:
+    container_name: aerie_merlin_worker
+    depends_on: ["postgres", "aerie_merlin"]
+    environment:
+      JAVA_OPTS: >
+        -Dorg.slf4j.simpleLogger.log.com.zaxxer.hikari=WARN
+        -Dorg.slf4j.simpleLogger.logFile=System.err
+      MERLIN_WORKER_DB: "aerie_merlin"
+      MERLIN_WORKER_DB_PASSWORD: aerie
+      MERLIN_WORKER_DB_PORT: 5432
+      MERLIN_WORKER_DB_SERVER: postgres
+      MERLIN_WORKER_DB_USER: aerie
+      MERLIN_WORKER_LOCAL_STORE: /usr/src/app/merlin_file_store
+      UNTRUE_PLAN_START: "2000-01-01T11:58:55.816Z"
+    image: "ghcr.io/nasa-ammos/aerie-merlin-worker:develop"
+    ports: ["27187:8080"]
+    restart: always
+    volumes:
+      - aerie_file_store:/usr/src/app/merlin_file_store:ro
+  aerie_scheduler:
+    container_name: aerie_scheduler
+    depends_on: ["aerie_merlin", "postgres"]
+    environment:
+      JAVA_OPTS: >
+        -Dorg.slf4j.simpleLogger.defaultLogLevel=WARN
+        -Dorg.slf4j.simpleLogger.logFile=System.err
+      MERLIN_GRAPHQL_URL: http://hasura:8080/v1/graphql
+      SCHEDULER_DB: "aerie_scheduler"
+      SCHEDULER_DB_PASSWORD: aerie
+      SCHEDULER_DB_PORT: 5432
+      SCHEDULER_DB_SERVER: postgres
+      SCHEDULER_DB_USER: aerie
+      SCHEDULER_PORT: 27185
+    image: "ghcr.io/nasa-ammos/aerie-scheduler:develop"
+    ports: ["27185:27185"]
+    restart: always
+    volumes:
+      - aerie_file_store:/usr/src/app/merlin_file_store
+  aerie_scheduler_worker:
+    container_name: aerie_scheduler_worker
+    depends_on: ["postgres", "aerie_scheduler"]
+    environment:
+      JAVA_OPTS: >
+        -Dorg.slf4j.simpleLogger.log.com.zaxxer.hikari=WARN
+        -Dorg.slf4j.simpleLogger.logFile=System.err
+      MERLIN_GRAPHQL_URL: http://hasura:8080/v1/graphql
+      SCHEDULER_WORKER_DB: "aerie_scheduler"
+      SCHEDULER_WORKER_DB_PASSWORD: aerie
+      SCHEDULER_WORKER_DB_PORT: 5432
+      SCHEDULER_WORKER_DB_SERVER: postgres
+      SCHEDULER_WORKER_DB_USER: aerie
+      SCHEDULER_OUTPUT_MODE: UpdateInputPlanWithNewActivities
+      MERLIN_LOCAL_STORE: /usr/src/app/merlin_file_store
+      SCHEDULER_RULES_JAR: /usr/src/app/merlin_file_store/scheduler_rules.jar
+    image: "ghcr.io/nasa-ammos/aerie-scheduler-worker:develop"
+    ports: ["27189:8080"]
+    restart: always
+    volumes:
+      - aerie_file_store:/usr/src/app/merlin_file_store:ro
+  aerie_sequencing:
+    container_name: aerie_sequencing
+    depends_on: ["postgres"]
+    environment:
+      LOG_FILE: console
+      LOG_LEVEL: warn
+      MERLIN_GRAPHQL_URL: http://hasura:8080/v1/graphql
+      SEQUENCING_DB: aerie_sequencing
+      SEQUENCING_DB_PASSWORD: aerie
+      SEQUENCING_DB_PORT: 5432
+      SEQUENCING_DB_SERVER: postgres
+      SEQUENCING_DB_USER: aerie
+      SEQUENCING_LOCAL_STORE: /usr/src/app/sequencing_file_store
+      SEQUENCING_SERVER_PORT: 27184
+    image: "ghcr.io/nasa-ammos/aerie-sequencing:develop"
+    ports: ["27184:27184"]
+    restart: always
+    volumes:
+      - aerie_file_store:/usr/src/app/sequencing_file_store
+  aerie_ui:
+    container_name: aerie_ui
+    depends_on: ["postgres"]
+    environment:
+      ORIGIN: http://localhost
+      PUBLIC_AUTH_TYPE: none
+      PUBLIC_GATEWAY_CLIENT_URL: http://localhost:9000
+      PUBLIC_GATEWAY_SERVER_URL: http://aerie_gateway:9000
+      PUBLIC_HASURA_CLIENT_URL: http://localhost:8080/v1/graphql
+      PUBLIC_HASURA_SERVER_URL: http://hasura:8080/v1/graphql
+      PUBLIC_HASURA_WEB_SOCKET_URL: ws://localhost:8080/v1/graphql
+    image: "ghcr.io/nasa-ammos/aerie-ui:develop"
+    ports: ["80:80"]
+    restart: always
+  hasura:
+    container_name: aerie_hasura
+    depends_on: ["postgres"]
+    environment:
+      AERIE_MERLIN_DATABASE_URL: "postgres://aerie:aerie@postgres:5432/aerie_merlin"
+      AERIE_SCHEDULER_DATABASE_URL: "postgres://aerie:aerie@postgres:5432/aerie_scheduler"
+      AERIE_SEQUENCING_DATABASE_URL: "postgres://aerie:aerie@postgres:5432/aerie_sequencing"
+      AERIE_UI_DATABASE_URL: "postgres://aerie:aerie@postgres:5432/aerie_ui"
+      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+      HASURA_GRAPHQL_LOG_LEVEL: warn
+      HASURA_GRAPHQL_METADATA_DATABASE_URL: "postgres://aerie:aerie@postgres:5432/aerie_hasura"
+      HASURA_GRAPHQL_METADATA_DIR: /hasura-metadata
+    image: "ghcr.io/nasa-ammos/aerie-hasura:develop"
+    ports: ["8080:8080"]
+    restart: always
+  postgres:
+    container_name: aerie_postgres
+    environment:
+      AERIE_PASSWORD: aerie
+      AERIE_USERNAME: aerie
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    image: ghcr.io/nasa-ammos/aerie-postgres:develop
+    ports: ["5432:5432"]
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  aerie_file_store:
+  postgres_data:
