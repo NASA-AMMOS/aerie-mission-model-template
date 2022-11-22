@@ -16,10 +16,10 @@ This repo provides an Aerie mission model template for a fictitious mission call
   export JAVA_HOME="/Library/Java/JavaVirtualMachines/temurin-19.jdk/Contents/Home"
   ```
 
-- Set `GITHUB_USERNAME` and `GITHUB_TOKEN` environment variables so you can download the Aerie Maven packages from the [GitHub Maven package registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry). For example with Zsh you can update your `.zshrc` with:
+- Set `GITHUB_USER` and `GITHUB_TOKEN` environment variables so you can download the Aerie Maven packages from the [GitHub Maven package registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry). For example with Zsh you can update your `.zshrc` with:
 
   ```sh
-  export GITHUB_USERNAME=""
+  export GITHUB_USER=""
   export GITHUB_TOKEN=""
   ```
 
