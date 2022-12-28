@@ -1,4 +1,4 @@
-@MissionModel(model = Firesat.class)
+@MissionModel(model = Mission.class)
 @WithMappers(BasicValueMappers.class)
 @WithConfiguration(Configuration.class)
 @WithActivityType(GncChangeControlMode.class)

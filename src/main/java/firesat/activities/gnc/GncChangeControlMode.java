@@ -1,6 +1,6 @@
 package firesat.activities.gnc;
 
-import firesat.Firesat;
+import firesat.Mission;
 import firesat.models.gnc.GncControlMode;
 import gov.nasa.jpl.aerie.merlin.framework.annotations.ActivityType;
 import gov.nasa.jpl.aerie.merlin.framework.annotations.ActivityType.EffectModel;
@@ -12,7 +12,7 @@ public final class GncChangeControlMode {
   public GncControlMode gncControlMode = GncControlMode.THRUSTERS;
 
   @EffectModel
-  public void run(final Firesat firesat) {
-    firesat.gncControlMode.set(this.gncControlMode);
+  public void run(final Mission mission) {
+    mission.gncControlMode.set(this.gncControlMode);
   }
 }
