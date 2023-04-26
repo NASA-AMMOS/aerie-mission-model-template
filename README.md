@@ -7,7 +7,7 @@ This repo provides an Aerie mission model template for a fictitious mission call
 - Install [OpenJDK Temurin LTS](https://adoptium.net/temurin/). If you're on OSX you can use [brew](https://brew.sh/):
 
   ```sh
-  brew install --cask temurin
+  brew install --cask temurin19
   ```
 
   Make sure you update your `JAVA_HOME` environment variable. For example with [Zsh](https://www.zsh.org/) you can update your `.zshrc` with:
