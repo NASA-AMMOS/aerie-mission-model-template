@@ -17,7 +17,7 @@ services:
       POSTGRES_PASSWORD: aerie
       POSTGRES_PORT: 5432
       POSTGRES_USER: aerie
-    image: "ghcr.io/nasa-ammos/aerie-gateway:develop"
+    image: "ghcr.io/nasa-ammos/aerie-gateway:latest"
     ports: ["9000:9000"]
     restart: always
     volumes:
@@ -37,7 +37,7 @@ services:
       MERLIN_LOCAL_STORE: /usr/src/app/merlin_file_store
       MERLIN_PORT: 27183
       UNTRUE_PLAN_START: "2000-01-01T11:58:55.816Z"
-    image: "ghcr.io/nasa-ammos/aerie-merlin:develop"
+    image: "ghcr.io/nasa-ammos/aerie-merlin:latest"
     ports: ["27183:27183"]
     restart: always
     volumes:
@@ -56,7 +56,7 @@ services:
       MERLIN_WORKER_DB_USER: aerie
       MERLIN_WORKER_LOCAL_STORE: /usr/src/app/merlin_file_store
       UNTRUE_PLAN_START: "2000-01-01T11:58:55.816Z"
-    image: "ghcr.io/nasa-ammos/aerie-merlin-worker:develop"
+    image: "ghcr.io/nasa-ammos/aerie-merlin-worker:latest"
     ports: ["27187:8080"]
     restart: always
     volumes:
@@ -75,7 +75,7 @@ services:
       SCHEDULER_DB_SERVER: postgres
       SCHEDULER_DB_USER: aerie
       SCHEDULER_PORT: 27185
-    image: "ghcr.io/nasa-ammos/aerie-scheduler:develop"
+    image: "ghcr.io/nasa-ammos/aerie-scheduler:latest"
     ports: ["27185:27185"]
     restart: always
     volumes:
@@ -96,7 +96,7 @@ services:
       SCHEDULER_OUTPUT_MODE: UpdateInputPlanWithNewActivities
       MERLIN_LOCAL_STORE: /usr/src/app/merlin_file_store
       SCHEDULER_RULES_JAR: /usr/src/app/merlin_file_store/scheduler_rules.jar
-    image: "ghcr.io/nasa-ammos/aerie-scheduler-worker:develop"
+    image: "ghcr.io/nasa-ammos/aerie-scheduler-worker:latest"
     ports: ["27189:8080"]
     restart: always
     volumes:
@@ -115,7 +115,7 @@ services:
       SEQUENCING_DB_USER: aerie
       SEQUENCING_LOCAL_STORE: /usr/src/app/sequencing_file_store
       SEQUENCING_SERVER_PORT: 27184
-    image: "ghcr.io/nasa-ammos/aerie-sequencing:develop"
+    image: "ghcr.io/nasa-ammos/aerie-sequencing:latest"
     ports: ["27184:27184"]
     restart: always
     volumes:
@@ -131,7 +131,7 @@ services:
       PUBLIC_HASURA_CLIENT_URL: http://localhost:8080/v1/graphql
       PUBLIC_HASURA_SERVER_URL: http://hasura:8080/v1/graphql
       PUBLIC_HASURA_WEB_SOCKET_URL: ws://localhost:8080/v1/graphql
-    image: "ghcr.io/nasa-ammos/aerie-ui:develop"
+    image: "ghcr.io/nasa-ammos/aerie-ui:latest"
     ports: ["80:80"]
     restart: always
   hasura:
@@ -148,7 +148,7 @@ services:
       HASURA_GRAPHQL_LOG_LEVEL: warn
       HASURA_GRAPHQL_METADATA_DATABASE_URL: "postgres://aerie:aerie@postgres:5432/aerie_hasura"
       HASURA_GRAPHQL_METADATA_DIR: /hasura-metadata
-    image: "ghcr.io/nasa-ammos/aerie-hasura:develop"
+    image: "ghcr.io/nasa-ammos/aerie-hasura:latest"
     ports: ["8080:8080"]
     restart: always
   postgres:
@@ -159,7 +159,7 @@ services:
       POSTGRES_DB: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
-    image: ghcr.io/nasa-ammos/aerie-postgres:develop
+    image: ghcr.io/nasa-ammos/aerie-postgres:latest
     ports: ["5432:5432"]
     restart: always
     volumes:
