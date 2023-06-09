@@ -4,7 +4,7 @@ This repo provides an Aerie mission model template for a fictitious mission call
 
 ## Prerequisites
 
-- Install [OpenJDK Temurin LTS](https://adoptium.net/temurin/). If you're on OSX you can use [brew](https://brew.sh/):
+- Install [OpenJDK Temurin LTS](https://adoptium.net/temurin/releases/?version=19). If you're on macOS, you can install [brew](https://brew.sh/) instead and then use the following command to install JDK 19:
 
   ```sh
   brew install --cask temurin19
@@ -16,7 +16,7 @@ This repo provides an Aerie mission model template for a fictitious mission call
   export JAVA_HOME="/Library/Java/JavaVirtualMachines/temurin-19.jdk/Contents/Home"
   ```
 
-- Set `GITHUB_USER` and `GITHUB_TOKEN` environment variables so you can download the Aerie Maven packages from the [GitHub Maven package registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry). For example with Zsh you can update your `.zshrc` with:
+- Set `GITHUB_USER` and `GITHUB_TOKEN` environment variables to your credentials (first you need to create a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) in your GitHub account) so you can download the Aerie Maven packages from the [GitHub Maven package registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry). For example with Zsh you can update your `.zshrc` to set the variables with:
 
   ```sh
   export GITHUB_USER=""
