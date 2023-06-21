@@ -7,6 +7,7 @@ This repo provides an Aerie mission model template for a fictitious mission call
 - Install [OpenJDK Temurin LTS](https://adoptium.net/temurin/releases/?version=19). If you're on macOS, you can install [brew](https://brew.sh/) instead and then use the following command to install JDK 19:
 
   ```sh
+  brew tap homebrew/cask-versions
   brew install --cask temurin19
   ```
 
