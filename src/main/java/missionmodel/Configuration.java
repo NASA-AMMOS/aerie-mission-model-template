@@ -1,4 +1,4 @@
-package firesat;
+package missionmodel;
 
 import static gov.nasa.jpl.aerie.merlin.framework.annotations.Export.Template;
 
