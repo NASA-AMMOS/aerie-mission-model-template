@@ -1,6 +1,17 @@
 # Aerie Mission Model Template
 
-This repo provides an Aerie mission model template for a fictitious mission called [FireSat](http://www.sme-smad.com/). It is meant as a starting point for building a new mission model in Aerie.
+This repo provides an Aerie mission model template, which is meant as a starting point for building a new mission model in Aerie.
+Included in this repo is all the basic infrastructure required to generate a mission model `.jar` file.
+
+#### Interested in learning how to develop a model yourself?
+Check out the [Aerie Mission Modeling Tutorial](https://nasa-ammos.github.io/aerie-docs/tutorials/mission-modeling/introduction/)
+
+#### Looking for some example models to play around with?
+Try out the following models:
+- [Simple Power Model](https://github.com/NASA-AMMOS/aerie-simple-model-power)
+- [Tutorial Model](https://github.com/NASA-AMMOS/aerie-modeling-tutorial)
+- Simple Data Model (coming soon)
+
 
 ## Prerequisites
 
