@@ -42,10 +42,12 @@ Try out the following models:
 To build a mission model JAR you can do:
 
 ```sh
-./gradlew build --refresh-dependencies # Outputs 'build/libs/missionmodel.jar'
+./gradlew build --refresh-dependencies
 ```
 
-You can then upload the JAR to Aerie using either the UI or API. If you want to just try the model without building it yourself you can [download it here](./firesat.jar).
+This will create the file `'build/libs/missionmodel.jar`, which you can upload to Aerie using the UI or API.
+
+<!-- If you want to just try the model without building it yourself you can [download it here](./missionmodel.jar). -->
 
 ## Testing
 
