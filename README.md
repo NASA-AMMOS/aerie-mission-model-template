@@ -1,6 +1,17 @@
 # Aerie Mission Model Template
 
-This repo provides an Aerie mission model template for a fictitious mission called [FireSat](http://www.sme-smad.com/). It is meant as a starting point for building a new mission model in Aerie.
+This repo provides an Aerie mission model template, which is meant as a starting point for building a new mission model in Aerie.
+Included in this repo is all the basic infrastructure required to generate a mission model `.jar` file.
+
+#### Interested in learning how to develop a model yourself?
+Check out the [Aerie Mission Modeling Tutorial](https://nasa-ammos.github.io/aerie-docs/tutorials/mission-modeling/introduction/)
+
+#### Looking for some example models to play around with?
+Try out the following models:
+- [Simple Power Model](https://github.com/NASA-AMMOS/aerie-simple-model-power)
+- [Tutorial Model](https://github.com/NASA-AMMOS/aerie-modeling-tutorial)
+- Simple Data Model (coming soon)
+
 
 ## Prerequisites
 
@@ -31,10 +42,12 @@ This repo provides an Aerie mission model template for a fictitious mission call
 To build a mission model JAR you can do:
 
 ```sh
-./gradlew build --refresh-dependencies # Outputs 'build/libs/firesat.jar'
+./gradlew build --refresh-dependencies
 ```
 
-You can then upload the JAR to Aerie using either the UI or API. If you want to just try the model without building it yourself you can [download it here](./firesat.jar).
+This will create the file `'build/libs/missionmodel.jar`, which you can upload to Aerie using the UI or API.
+
+<!-- If you want to just try the model without building it yourself you can [download it here](./missionmodel.jar). -->
 
 ## Testing
 
