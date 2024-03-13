@@ -38,6 +38,7 @@ services:
       MERLIN_LOCAL_STORE: /usr/src/app/merlin_file_store
       MERLIN_PORT: 27183
       UNTRUE_PLAN_START: "2000-01-01T11:58:55.816Z"
+      ENABLE_CONTINUOUS_VALIDATION_THREAD: true
     image: "ghcr.io/nasa-ammos/aerie-merlin:v2.4.0"
     ports: ["27183:27183"]
     restart: always
