@@ -2,6 +2,8 @@ plugins {
   id 'java-library'
 }
 
+def AERIE_VERSION = "2.9.0"
+
 java {
   toolchain {
     languageVersion = JavaLanguageVersion.of(21)
@@ -37,13 +39,13 @@ tasks.named('test') {
 }
 
 dependencies {
-  annotationProcessor 'gov.nasa.jpl.aerie:merlin-framework-processor:+'
-  implementation 'gov.nasa.jpl.aerie:contrib:+'
-  implementation 'gov.nasa.jpl.aerie:merlin-framework:+'
-  implementation 'gov.nasa.jpl.aerie:merlin-sdk:+'
-  implementation 'gov.nasa.jpl.aerie:merlin-driver:+'
-  implementation 'gov.nasa.jpl.aerie:parsing-utilities:+'
+  annotationProcessor 'gov.nasa.jpl.aerie:merlin-framework-processor:' + AERIE_VERSION
+  implementation 'gov.nasa.jpl.aerie:contrib:' + AERIE_VERSION
+  implementation 'gov.nasa.jpl.aerie:merlin-framework:' + AERIE_VERSION
+  implementation 'gov.nasa.jpl.aerie:merlin-sdk:' + AERIE_VERSION
+  implementation 'gov.nasa.jpl.aerie:merlin-driver:' + AERIE_VERSION
+  implementation 'gov.nasa.jpl.aerie:parsing-utilities:' + AERIE_VERSION
 
-  testImplementation 'gov.nasa.jpl.aerie:merlin-framework-junit:+'
+  testImplementation 'gov.nasa.jpl.aerie:merlin-framework-junit:' + AERIE_VERSION
   testImplementation 'org.junit.jupiter:junit-jupiter:+'
 }
