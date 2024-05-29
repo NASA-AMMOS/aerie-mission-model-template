@@ -1,0 +1,41 @@
+diff --git a/missionmodel/src/main/java/missionmodel/Mission.java b/missionmodel/src/main/java/missionmodel/Mission.java
+index d7eb103..e2b3da5 100644
+--- a/missionmodel/src/main/java/missionmodel/Mission.java
++++ b/missionmodel/src/main/java/missionmodel/Mission.java
+@@ -25,7 +25,7 @@ public final class Mission {
+   // public MutableResource<Discrete<Double>> ExampleResource;
+ 
+   // Example model declaration
+-  //public final DataModel dataModel;
++  public final DataModel dataModel;
+ 
+   public Mission(final gov.nasa.jpl.aerie.merlin.framework.Registrar registrar, final Configuration config) {
+     this.errorRegistrar = new Registrar(registrar, Registrar.ErrorBehavior.Log);
+@@ -35,10 +35,10 @@ public final class Mission {
+     // errorRegistrar.discrete("ExampleResource", ExampleResource, new DoubleValueMapper());
+ 
+     // Example model instantiation
+-    //this.dataModel = new DataModel(this.errorRegistrar, config);
++    this.dataModel = new DataModel(this.errorRegistrar, config);
+ 
+     // Example daemon task call
+-    // spawn(dataModel::integrateDataRate);
++    spawn(dataModel::integrateDataRate);
+ 
+   }
+ }
+diff --git a/missionmodel/src/main/java/missionmodel/package-info.java b/missionmodel/src/main/java/missionmodel/package-info.java
+index 314ae30..f0d67da 100644
+--- a/missionmodel/src/main/java/missionmodel/package-info.java
++++ b/missionmodel/src/main/java/missionmodel/package-info.java
+@@ -1,8 +1,8 @@
+ @MissionModel(model = Mission.class)
+ @WithMappers(BasicValueMappers.class)
+ @WithConfiguration(Configuration.class)
+-// @WithActivityType(ActivityType.class) // for new activity type
+-// @WithMetadata(name = "unit", annotation = gov.nasa.jpl.aerie.contrib.metadata.Unit.class) // for unit support
++@WithActivityType(CollectData.class) // for new activity type
++@WithMetadata(name = "unit", annotation = gov.nasa.jpl.aerie.contrib.metadata.Unit.class) // for unit support
+ package missionmodel;
+ 
+ import gov.nasa.jpl.aerie.contrib.serialization.rulesets.BasicValueMappers;
