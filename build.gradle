@@ -36,14 +36,24 @@ tasks.named('test') {
   useJUnitPlatform()
 }
 
-dependencies {
-  annotationProcessor 'gov.nasa.jpl.aerie:merlin-framework-processor:+'
-  implementation 'gov.nasa.jpl.aerie:contrib:+'
-  implementation 'gov.nasa.jpl.aerie:merlin-framework:+'
-  implementation 'gov.nasa.jpl.aerie:merlin-sdk:+'
-  implementation 'gov.nasa.jpl.aerie:merlin-driver:+'
-  implementation 'gov.nasa.jpl.aerie:parsing-utilities:+'
+def aerieVersion = getAerieVersion()
 
-  testImplementation 'gov.nasa.jpl.aerie:merlin-framework-junit:+'
+static String getAerieVersion() {
+  def dockerTag = System.getenv("DOCKER_TAG")
+  if (dockerTag == null || !dockerTag.startsWith('v')) {
+    return "+"
+  }
+  return dockerTag.substring(1)
+}
+
+dependencies {
+  annotationProcessor 'gov.nasa.jpl.aerie:merlin-framework-processor:' + aerieVersion
+  implementation 'gov.nasa.jpl.aerie:contrib:' + aerieVersion
+  implementation 'gov.nasa.jpl.aerie:merlin-framework:' + aerieVersion
+  implementation 'gov.nasa.jpl.aerie:merlin-sdk:' + aerieVersion
+  implementation 'gov.nasa.jpl.aerie:merlin-driver:' + aerieVersion
+  implementation 'gov.nasa.jpl.aerie:parsing-utilities:' + aerieVersion
+
+  testImplementation 'gov.nasa.jpl.aerie:merlin-framework-junit:' + aerieVersion
   testImplementation 'org.junit.jupiter:junit-jupiter:+'
 }
