@@ -1,10 +1,12 @@
-package scheduling;
+package scheduling.procedures;
 
 import gov.nasa.ammos.aerie.procedural.scheduling.plan.EditablePlan;
 import gov.nasa.ammos.aerie.procedural.scheduling.Rule;
 import gov.nasa.ammos.aerie.procedural.scheduling.annotations.SchedulingProcedure;
 import gov.nasa.jpl.aerie.merlin.protocol.types.Duration;
 import gov.nasa.ammos.aerie.timeline.payloads.activities.DirectiveStart;
+
+import missionmodel.Utils;
 
 import java.util.Map;
 
@@ -18,7 +20,7 @@ public record SampleProcedure(int quantity) implements Rule {
     var currentTime = firstTime;
     for (var i = 0; i < quantity; i++) {
       plan.create(
-          "CollectData",
+          Utils.getCollectDataActivityName(),
           new DirectiveStart.Absolute(currentTime),
           Map.of()
       );
