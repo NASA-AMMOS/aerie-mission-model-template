@@ -25,7 +25,7 @@ public final class Mission {
   // public MutableResource<Discrete<Double>> ExampleResource;
 
   // Example model declaration
-  //public final DataModel dataModel;
+  public final DataModel dataModel;
 
   public Mission(final gov.nasa.jpl.aerie.merlin.framework.Registrar registrar, final Configuration config) {
     this.errorRegistrar = new Registrar(registrar, Registrar.ErrorBehavior.Log);
@@ -35,10 +35,10 @@ public final class Mission {
     // errorRegistrar.discrete("ExampleResource", ExampleResource, new DoubleValueMapper());
 
     // Example model instantiation
-    //this.dataModel = new DataModel(this.errorRegistrar, config);
+    this.dataModel = new DataModel(this.errorRegistrar, config);
 
     // Example daemon task call
-    // spawn(dataModel::integrateDataRate);
+    spawn(dataModel::integrateDataRate);
 
   }
 }
