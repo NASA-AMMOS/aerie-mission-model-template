@@ -38,7 +38,7 @@ public final class Mission {
     this.dataModel = new DataModel(this.errorRegistrar, config);
 
     // Example daemon task call
-    spawn(dataModel::integrateDataRate);
+    // spawn(dataModel::integrateDataRate);
 
   }
 }
