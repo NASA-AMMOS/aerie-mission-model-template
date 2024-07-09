@@ -26,6 +26,7 @@ public class DataModel {
 
     public DataModel(Registrar registrar, Configuration config) {
       RecordingRate = resource(discrete(0.0));
+      SSR_Volume_Sampled = resource(discrete(0.0));
       registrar.discrete("RecordingRate", RecordingRate, withUnit("Mbps", new DoubleValueMapper()));
     }
 
