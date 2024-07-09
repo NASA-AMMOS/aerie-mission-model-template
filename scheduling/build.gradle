@@ -16,10 +16,10 @@ dependencies {
   implementation project(":missionmodel")
 
   // procedural scheduling libraries
-  annotationProcessor files("../../aerie/procedural/processor/build/libs/processor-all.jar")
-  implementation files("../../aerie/procedural/scheduling/build/libs/scheduling-all.jar")
-  implementation files("../../aerie/procedural/timeline/build/libs/timeline-all.jar")
-  implementation files("../../aerie/procedural/constraints/build/libs/constraints.jar")
+  annotationProcessor "gov.nasa.ammos.aerie.procedural:processor:+"
+  implementation "gov.nasa.ammos.aerie.procedural:scheduling:+"
+  implementation "gov.nasa.ammos.aerie.procedural:timeline:+"
+  implementation "gov.nasa.ammos.aerie.procedural:constraints:+"
 
   // standard aerie deps
   implementation 'gov.nasa.jpl.aerie:merlin-framework:' + project.aerieVersion

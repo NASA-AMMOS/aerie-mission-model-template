@@ -1,3 +1,5 @@
 rootProject.name = 'aerie-template'
 include('missionmodel')
 include('scheduling')
+
+includeBuild("/Users/dailis/projects/aerie/worktrees/feature/procedural-scheduling")
