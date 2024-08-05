@@ -1,0 +1,35 @@
+plugins {
+  id 'java-library'
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(21)
+  }
+}
+
+// The runtime environment this JAR will be deployed to doesn't know what this model depends on.
+// So the generated JAR must include its dependencies. (Except `merlin-sdk`, which is marked `compileTimeApi` by
+// `merlin-framework`, so that the runtime system and model JAR can agree on the same interfaces.)
+jar {
+  from {
+    configurations.runtimeClasspath.filter{ it.exists() }.collect{ it.isDirectory() ? it : zipTree(it) }
+  }
+  duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+}
+
+tasks.named('test') {
+  useJUnitPlatform()
+}
+
+dependencies {
+  annotationProcessor 'gov.nasa.jpl.aerie:merlin-framework-processor:' + project.aerieVersion
+  implementation 'gov.nasa.jpl.aerie:contrib:' + project.aerieVersion
+  implementation 'gov.nasa.jpl.aerie:merlin-framework:' + project.aerieVersion
+  implementation 'gov.nasa.jpl.aerie:merlin-sdk:' + project.aerieVersion
+  implementation 'gov.nasa.jpl.aerie:merlin-driver:' + project.aerieVersion
+  implementation 'gov.nasa.jpl.aerie:parsing-utilities:' + project.aerieVersion
+
+  testImplementation 'gov.nasa.jpl.aerie:merlin-framework-junit:' + project.aerieVersion
+  testImplementation 'org.junit.jupiter:junit-jupiter:+'
+}
