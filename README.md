@@ -38,10 +38,10 @@ Try out the following models:
 To build a mission model JAR you can do:
 
 ```sh
-./gradlew missionmodel:build --refresh-dependencies
+./gradlew :missionmodel:build --refresh-dependencies
 ```
 
-This will create the file `'missionmode/build/libs/missionmodel.jar`, which you can upload to Aerie using the UI or API.
+This will create the file `'missionmodel/build/libs/missionmodel.jar`, which you can upload to Aerie using the UI or API.
 
 <!-- If you want to just try the model without building it yourself you can [download it here](./missionmodel.jar). -->
 
@@ -50,5 +50,5 @@ This will create the file `'missionmode/build/libs/missionmodel.jar`, which you 
 To run unit tests under [./missionmodel/src/test](./missionmodel/src/test) against your mission model you can do:
 
 ```sh
-./gradlew missionmodel:test
+./gradlew :missionmodel:test
 ```
