@@ -18,8 +18,17 @@ subprojects {
 }
 
 task dumpGithubCreds {
-  println "user: $env.GITHUB_USER.value"
-  println "token: $env.GITHUB_TOKEN.value"
+  doLast {
+    println "user: $env.GITHUB_USER.value"
+    println "token: $env.GITHUB_TOKEN.value"
+  }
 }
 
-project.ext.set("aerieVersion", env.DOCKER_TAG.value.substring(1))
+project.ext.set("aerieVersion", getAerieVersion())
+
+def getAerieVersion() {
+  if (env.DOCKER_TAG.isPresent()) {
+    return env.DOCKER_TAG.value.replace("v", "") // strip leading v
+  }
+  return "+" // + means latest version
+}
