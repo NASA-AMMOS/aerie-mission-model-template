@@ -6,17 +6,45 @@ subprojects {
       name = "GitHubPackages"
       url = "https://maven.pkg.github.com/nasa-ammos/aerie"
       credentials {
-        username = System.getenv('GITHUB_USER')
-        password = System.getenv('GITHUB_TOKEN')
+        username = getValueFromEnvFile("GITHUB_USER")
+        password = getValueFromEnvFile("GITHUB_TOKEN")
       }
     }
+  }
+}
+
+def getValueFromEnvFile(String desiredKey) {
+  def envFile = file(".env")
+  if (!envFile.exists()) {
+    return
+  }
+
+  for (line in envFile.readLines()) {
+    line = line.replace("export ", "")
+    def (key, value) = line.split('=', 2).collect { it.trim() }
+    if (!(key || value)) {
+      continue
+    }
+    if (key == desiredKey) {
+      // strip leading and trailing single or double quotes
+      value = value.replaceAll(/^['"]|['"]$/, '')
+      return value
+    }
+  }
+}
+
+task checkGithubCredentials {
+  doLast {
+    println "user: " + getValueFromEnvFile("GITHUB_USER")
+    println "token: " + getValueFromEnvFile("GITHUB_TOKEN")
+    println "version: " + getAerieVersion()
   }
 }
 
 project.ext.set("aerieVersion", getAerieVersion())
 
 static String getAerieVersion() {
-  def dockerTag = System.getenv("DOCKER_TAG")
+  def dockerTag = getValueFromEnvFile("DOCKER_TAG")
   if (dockerTag == null || !dockerTag.startsWith('v')) {
     return "+"
   }
