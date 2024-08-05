@@ -1,3 +1,7 @@
+plugins {
+  id("co.uzzu.dotenv.gradle") version "4.0.0"
+}
+
 subprojects {
   repositories {
     flatDir { dirs "$rootDir/third-party" }
@@ -6,47 +10,16 @@ subprojects {
       name = "GitHubPackages"
       url = "https://maven.pkg.github.com/nasa-ammos/aerie"
       credentials {
-        username = getValueFromEnvFile("GITHUB_USER")
-        password = getValueFromEnvFile("GITHUB_TOKEN")
+        username = env.GITHUB_USER.value
+        password = env.GITHUB_TOKEN.value
       }
     }
   }
 }
 
-def getValueFromEnvFile(String desiredKey) {
-  def envFile = file(".env")
-  if (!envFile.exists()) {
-    return
-  }
-
-  for (line in envFile.readLines()) {
-    line = line.replace("export ", "")
-    def (key, value) = line.split('=', 2).collect { it.trim() }
-    if (!(key || value)) {
-      continue
-    }
-    if (key == desiredKey) {
-      // strip leading and trailing single or double quotes
-      value = value.replaceAll(/^['"]|['"]$/, '')
-      return value
-    }
-  }
+task dumpGithubCreds {
+  println "user: $env.GITHUB_USER.value"
+  println "token: $env.GITHUB_TOKEN.value"
 }
 
-task checkGithubCredentials {
-  doLast {
-    println "user: " + getValueFromEnvFile("GITHUB_USER")
-    println "token: " + getValueFromEnvFile("GITHUB_TOKEN")
-    println "version: " + getAerieVersion()
-  }
-}
-
-project.ext.set("aerieVersion", getAerieVersion())
-
-static String getAerieVersion() {
-  def dockerTag = getValueFromEnvFile("DOCKER_TAG")
-  if (dockerTag == null || !dockerTag.startsWith('v')) {
-    return "+"
-  }
-  return dockerTag.substring(1)
-}
+project.ext.set("aerieVersion", env.DOCKER_TAG.value.substring(1))
