@@ -18,8 +18,7 @@ Try out the following models:
 - Install [OpenJDK Temurin LTS](https://adoptium.net/temurin/releases/?version=21). If you're on macOS, you can install [brew](https://brew.sh/) instead and then use the following command to install JDK 21:
 
   ```sh
-  brew tap homebrew/cask-versions
-  brew install --cask temurin21
+  brew install --cask temurin@21
   ```
 
   Make sure you update your `JAVA_HOME` environment variable. For example with [Zsh](https://www.zsh.org/) you can update your `.zshrc` with:
