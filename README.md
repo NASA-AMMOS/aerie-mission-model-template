@@ -20,19 +20,16 @@ Try out the following models:
   brew install --cask temurin@21
   ```
 
-  Make sure you update your `JAVA_HOME` environment variable. For example with [Zsh](https://www.zsh.org/) you can update your `.zshrc` with:
+  First you need to create a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) in your GitHub account that includes `read-packages` scope) so you can download the Aerie Maven packages from the [GitHub Maven package registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry).
+
+  Then, copy the `.env.template` file to `.env`. This `.env` file will hold your `GITHUB_TOKEN` and `GITHUB_USER` variables. Note that this file is "`.gitignore`d" by default, so edits to this file won't be tracked in version control.
+
+  Open up `.env` and fill in the just the missing variables with your Github information:
 
   ```sh
-  export JAVA_HOME="/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home"
-  ```
-
-- Set `GITHUB_USER` and `GITHUB_TOKEN` environment variables to your credentials (first you need to create a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) in your GitHub account that includes `read-packages` scope) so you can download the Aerie Maven packages from the [GitHub Maven package registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry).
-
-  For example with Zsh you can update your `.zshrc` to set the variables with:
-
-  ```sh
-  export GITHUB_USER=""
-  export GITHUB_TOKEN=""
+  # in .env file
+  GITHUB_USER="your_github_username_here"
+  GITHUB_TOKEN="your_personal_access_token"
   ```
 
 ## Building
@@ -41,10 +38,10 @@ Try out the following models:
 To build a mission model JAR you can do:
 
 ```sh
-./gradlew build --refresh-dependencies
+./gradlew :missionmodel:build --refresh-dependencies
 ```
 
-This will create the file `'build/libs/missionmodel.jar`, which you can upload to Aerie using the UI or API.
+This will create the file `'missionmodel/build/libs/missionmodel.jar`, which you can upload to Aerie using the UI or API.
 
 <!-- If you want to just try the model without building it yourself you can [download it here](./missionmodel.jar). -->
 
@@ -94,5 +91,5 @@ From there, go to the plan you selected in the UI. Under the "scheduling" tab, y
 To run unit tests under [./missionmodel/src/test](./missionmodel/src/test) against your mission model you can do:
 
 ```sh
-./gradlew missionmodel:test
+./gradlew :missionmodel:test
 ```

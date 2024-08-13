@@ -1,3 +1,7 @@
+plugins {
+  id("co.uzzu.dotenv.gradle") version "4.0.0"
+}
+
 subprojects {
   repositories {
     flatDir { dirs "$rootDir/third-party" }
@@ -6,19 +10,25 @@ subprojects {
       name = "GitHubPackages"
       url = "https://maven.pkg.github.com/nasa-ammos/aerie"
       credentials {
-        username = System.getenv('GITHUB_USER')
-        password = System.getenv('GITHUB_TOKEN')
+        username = env.GITHUB_USER.value
+        password = env.GITHUB_TOKEN.value
       }
     }
   }
 }
 
+task dumpGithubCreds {
+  doLast {
+    println "user: $env.GITHUB_USER.value"
+    println "token: $env.GITHUB_TOKEN.value"
+  }
+}
+
 project.ext.set("aerieVersion", getAerieVersion())
 
-static String getAerieVersion() {
-  def dockerTag = System.getenv("DOCKER_TAG")
-  if (dockerTag == null || !dockerTag.startsWith('v')) {
-    return "+"
+def getAerieVersion() {
+  if (env.DOCKER_TAG.isPresent()) {
+    return env.DOCKER_TAG.value.replace("v", "") // strip leading v
   }
-  return dockerTag.substring(1)
+  return "+" // + means latest version
 }
