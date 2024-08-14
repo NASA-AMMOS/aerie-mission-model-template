@@ -1,7 +1,8 @@
 # Aerie Template
 
-This repo provides an Aerie mission model template, which is meant as a starting point for building a new mission model in Aerie.
-Included in this repo is all the basic infrastructure required to generate a mission model `.jar` file.
+This repo provides a basic template for getting started with mission modeling and scheduling within the Aerie framework.
+
+Included in this repo is all the basic infrastructure and scaffolding required to generate a mission model `.jar` file, as well as scheduling procedure `.jar`s that can be uploaded and run within Aerie.
 
 #### Interested in learning how to develop a model yourself?
 Check out the [Aerie Mission Modeling Tutorial](https://nasa-ammos.github.io/aerie-docs/tutorials/mission-modeling/introduction/)
