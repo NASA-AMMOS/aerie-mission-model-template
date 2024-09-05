@@ -61,6 +61,8 @@ Then, copy an example scheduling procedure into the procedures folder.
 cp scheduling/examples/SampleProcedure.java scheduling/src/main/java/scheduling/procedures
 ```
 
+(For a more involved example procedure, take a look at some [procedures in the Aerie repo](https://github.com/NASA-AMMOS/aerie/blob/develop/procedural/examples/foo-procedures/src/main/java/gov/nasa/ammos/aerie/procedural/examples/fooprocedures/procedures/StayWellFed.java))
+
 The following will be your process every time you iterate on these procedures
 
 ```sh
@@ -71,21 +73,15 @@ The following will be your process every time you iterate on these procedures
 The first `gradle` command will expand `@SchedulingProcedure` annotations into new, verbose source code files that Aerie can process down the line.
 The second `gradle` command then looks for those generated files, creates a task to build a `.jar` for each file, and then runs all those tasks.
 
-Your procedure jars will then be in `scheduling/build/libs/OriginalSourceCodeFileName.jar`
+Your procedure jars will then be in `scheduling/build/libs/OriginalSourceCodeFileName.jar`, which in this case will be `scheduling/build/libs/SampleProcedure.jar`.
 
 ## Running Procedures
 
 Now that you have `.jar`'s, we need to upload them to Aerie so you can run them against plans.
 
-The quickest way to upload lots of JARs is to use the `aerie-cli`. Read the [Getting started](https://github.com/NASA-AMMOS/aerie-cli#getting-started) section to set up the CLI with your Aerie instance.
+The quickest way to upload a single JAR is to use the `aerie-ui`. On the `/scheduling/goals/new` page, you should now see a new tab option for creating a `jar` procedural goal. Once created, you will need to register the goal with a specific plan, just like you do with EDSL goals.
 
-Then, you can run the following command to upload a scheduling procedure JAR and register it with a specific plan in the Aerie system
-
-```sh
-aerie-cli goals new --plan x scheduling/build/libs/ProcedureJarYouWantToUpload.jar
-```
-
-From there, go to the plan you selected in the UI. Under the "scheduling" tab, you should now see your procedure ready to enable and run.
+Then, from the manage goals page on your plan, you can pass arguments to your procedure using the drop down menu, and run your procedures using the schedule button. You can also right click to manage invocations (duplicate, delete, etc)
 
 ## Testing
 
