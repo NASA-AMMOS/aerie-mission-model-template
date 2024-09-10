@@ -1,0 +1,140 @@
+diff --git a/missionmodel/src/main/java/missionmodel/CollectData.java b/missionmodel/src/main/java/missionmodel/CollectData.java
+new file mode 100644
+index 0000000..4e61911
+--- /dev/null
++++ b/missionmodel/src/main/java/missionmodel/CollectData.java
+@@ -0,0 +1,45 @@
++package missionmodel;
++
++import gov.nasa.jpl.aerie.contrib.metadata.Unit;
++import gov.nasa.jpl.aerie.contrib.streamline.modeling.discrete.DiscreteEffects;
++import gov.nasa.jpl.aerie.merlin.framework.annotations.ActivityType;
++import gov.nasa.jpl.aerie.merlin.framework.annotations.Export.Parameter;
++import gov.nasa.jpl.aerie.merlin.framework.annotations.Export.Validation;
++
++
++import gov.nasa.jpl.aerie.merlin.protocol.types.Duration;
++
++import static gov.nasa.jpl.aerie.merlin.framework.ModelActions.delay;
++
++/* Example Activity Type Definition
++   If this activity is moved over to main/java/missionmodel along with the DataModel class and the example model
++   declaration in the Mission class is uncommented, the model should compile.
++ */
++@ActivityType("CollectData")
++public class CollectData {
++
++    @Parameter
++    @Unit("Mbps")
++    public double rate = 10.0; // Mbps
++
++    @Parameter
++    public Duration duration = Duration.duration(1, Duration.HOURS);
++
++    @Validation("Collection rate is beyond buffer limit of 100.0 Mbps")
++    @Validation.Subject("rate")
++    public boolean validateCollectionRate() {
++      return rate <= 100.0;
++    }
++
++    @ActivityType.EffectModel
++    public void run(Mission model) {
++
++        /*
++         Collect data at fixed rate over duration of activity
++        */
++        DiscreteEffects.increase(model.dataModel.RecordingRate, this.rate);
++        delay(duration);
++        DiscreteEffects.decrease(model.dataModel.RecordingRate, this.rate);
++
++    }
++}
+diff --git a/missionmodel/src/main/java/missionmodel/DataModel.java b/missionmodel/src/main/java/missionmodel/DataModel.java
+new file mode 100644
+index 0000000..b0df0d4
+--- /dev/null
++++ b/missionmodel/src/main/java/missionmodel/DataModel.java
+@@ -0,0 +1,42 @@
++package missionmodel;
++
++import gov.nasa.jpl.aerie.contrib.serialization.mappers.DoubleValueMapper;
++import gov.nasa.jpl.aerie.contrib.streamline.core.MutableResource;
++import gov.nasa.jpl.aerie.contrib.streamline.modeling.Registrar;
++import gov.nasa.jpl.aerie.contrib.streamline.modeling.discrete.Discrete;
++import gov.nasa.jpl.aerie.contrib.streamline.modeling.discrete.DiscreteEffects;
++import gov.nasa.jpl.aerie.merlin.protocol.types.Duration;
++
++import static gov.nasa.jpl.aerie.contrib.metadata.UnitRegistrar.withUnit;
++import static gov.nasa.jpl.aerie.contrib.streamline.core.MutableResource.resource;
++import static gov.nasa.jpl.aerie.contrib.streamline.core.Resources.currentValue;
++import static gov.nasa.jpl.aerie.contrib.streamline.modeling.discrete.Discrete.discrete;
++import static gov.nasa.jpl.aerie.merlin.framework.ModelActions.delay;
++
++/* Example Mission Model delegate class
++   This class includes two resource declarations and a method that can be spawned via a daemon task
++   If this activity is moved over to main/java/missionmodel and the example model declaration in the Mission class
++   is uncommented, the model should compile.
++ */
++public class DataModel {
++
++    public MutableResource<Discrete<Double>> RecordingRate; // Megabits/s
++
++    public MutableResource<Discrete<Double>> SSR_Volume_Sampled; // Gigabits
++
++    public DataModel(Registrar registrar, Configuration config) {
++      RecordingRate = resource(discrete(0.0));
++      registrar.discrete("RecordingRate", RecordingRate, withUnit("Mbps", new DoubleValueMapper()));
++    }
++
++    public void integrateDataRate() {
++      Duration INTEGRATION_SAMPLE_INTERVAL = Duration.duration(60, Duration.SECONDS);
++      while(true) {
++        delay(INTEGRATION_SAMPLE_INTERVAL);
++        Double currentRecordingRate = currentValue(RecordingRate);
++        DiscreteEffects.increase(SSR_Volume_Sampled, currentRecordingRate *
++          INTEGRATION_SAMPLE_INTERVAL.ratioOver(Duration.SECONDS) / 1000.0); // Mbit -> Gbit
++      }
++    }
++
++}
+diff --git a/missionmodel/src/main/java/missionmodel/Mission.java b/missionmodel/src/main/java/missionmodel/Mission.java
+index d7eb103..e2b3da5 100644
+--- a/missionmodel/src/main/java/missionmodel/Mission.java
++++ b/missionmodel/src/main/java/missionmodel/Mission.java
+@@ -25,7 +25,7 @@ public final class Mission {
+   // public MutableResource<Discrete<Double>> ExampleResource;
+ 
+   // Example model declaration
+-  //public final DataModel dataModel;
++  public final DataModel dataModel;
+ 
+   public Mission(final gov.nasa.jpl.aerie.merlin.framework.Registrar registrar, final Configuration config) {
+     this.errorRegistrar = new Registrar(registrar, Registrar.ErrorBehavior.Log);
+@@ -35,10 +35,10 @@ public final class Mission {
+     // errorRegistrar.discrete("ExampleResource", ExampleResource, new DoubleValueMapper());
+ 
+     // Example model instantiation
+-    //this.dataModel = new DataModel(this.errorRegistrar, config);
++    this.dataModel = new DataModel(this.errorRegistrar, config);
+ 
+     // Example daemon task call
+-    // spawn(dataModel::integrateDataRate);
++    spawn(dataModel::integrateDataRate);
+ 
+   }
+ }
+diff --git a/missionmodel/src/main/java/missionmodel/package-info.java b/missionmodel/src/main/java/missionmodel/package-info.java
+index 314ae30..f0d67da 100644
+--- a/missionmodel/src/main/java/missionmodel/package-info.java
++++ b/missionmodel/src/main/java/missionmodel/package-info.java
+@@ -1,8 +1,8 @@
+ @MissionModel(model = Mission.class)
+ @WithMappers(BasicValueMappers.class)
+ @WithConfiguration(Configuration.class)
+-// @WithActivityType(ActivityType.class) // for new activity type
+-// @WithMetadata(name = "unit", annotation = gov.nasa.jpl.aerie.contrib.metadata.Unit.class) // for unit support
++@WithActivityType(CollectData.class) // for new activity type
++@WithMetadata(name = "unit", annotation = gov.nasa.jpl.aerie.contrib.metadata.Unit.class) // for unit support
+ package missionmodel;
+ 
+ import gov.nasa.jpl.aerie.contrib.serialization.rulesets.BasicValueMappers;
