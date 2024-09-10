@@ -16,16 +16,15 @@ dependencies {
   implementation project(":missionmodel")
 
   // procedural scheduling libraries
-  annotationProcessor "gov.nasa.ammos.aerie.procedural:processor:+"
-  implementation 'gov.nasa.jpl.aerie:contrib:+'
-  implementation "gov.nasa.ammos.aerie.procedural:scheduling:+"
-  implementation "gov.nasa.ammos.aerie.procedural:timeline:+"
-  implementation "gov.nasa.ammos.aerie.procedural:constraints:+"
-  implementation 'gov.nasa.jpl.aerie:type-utils:+'
+  annotationProcessor "gov.nasa.ammos.aerie.procedural:processor:" + project.aerieVersion
+  implementation "gov.nasa.ammos.aerie.procedural:scheduling:" + project.aerieVersion
+  implementation "gov.nasa.ammos.aerie.procedural:timeline:" + project.aerieVersion
+  implementation "gov.nasa.ammos.aerie.procedural:constraints:" + project.aerieVersion
 
   // standard aerie deps
   implementation 'gov.nasa.jpl.aerie:merlin-framework:' + project.aerieVersion
   implementation 'gov.nasa.jpl.aerie:contrib:' + project.aerieVersion
+  implementation 'gov.nasa.jpl.aerie:type-utils:' + project.aerieVersion
 
   testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
 }
