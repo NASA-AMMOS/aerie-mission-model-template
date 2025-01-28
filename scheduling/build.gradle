@@ -67,7 +67,7 @@ tasks.create("generateSchedulingProcedureJarTasks") {
 
     tasks.create(taskName, ShadowJar) {
       group = 'SchedulingProcedureJars'
-      configurations = [project.configurations.compileClasspath]
+      configurations = [project.configurations.compileClasspath, project.configurations.runtimeClasspath]
       from sourceSets.main.output
       archiveBaseName = "" // clear
       archiveClassifier.set(nameWithoutExtension) // set output jar name
