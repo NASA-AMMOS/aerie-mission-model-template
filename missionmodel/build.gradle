@@ -29,6 +29,7 @@ dependencies {
   implementation 'gov.nasa.jpl.aerie:merlin-sdk:' + project.aerieVersion
   implementation 'gov.nasa.jpl.aerie:merlin-driver:' + project.aerieVersion
   implementation 'gov.nasa.jpl.aerie:parsing-utilities:' + project.aerieVersion
+  implementation 'gov.nasa.jpl.aerie:type-utils:' + project.aerieVersion
 
   testImplementation 'gov.nasa.jpl.aerie:merlin-framework-junit:' + project.aerieVersion
   testImplementation 'org.junit.jupiter:junit-jupiter:+'
