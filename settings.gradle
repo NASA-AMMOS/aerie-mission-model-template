@@ -1,3 +1,4 @@
 rootProject.name = 'aerie-template'
 include('missionmodel')
 include('scheduling')
+include('constraints')

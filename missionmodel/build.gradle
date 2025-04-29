@@ -33,5 +33,6 @@ dependencies {
 
   testImplementation 'gov.nasa.jpl.aerie:merlin-framework-junit:' + project.aerieVersion
   testImplementation 'org.junit.jupiter:junit-jupiter:+'
+  testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
   testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
