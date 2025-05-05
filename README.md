@@ -46,42 +46,52 @@ This will create the file `'missionmodel/build/libs/missionmodel.jar`, which you
 
 <!-- If you want to just try the model without building it yourself you can [download it here](./missionmodel.jar). -->
 
-### Scheduling Procedures
-To build scheduling procedures, first you will need a completed mission model. You can accomplish this by following the [Aerie Mission Modeling Tutorial](https://nasa-ammos.github.io/aerie-docs/tutorials/mission-modeling/introduction/), or by using the included `complete-model-tutorial.patch`:
+### Scheduling Procedures and Constraints
+To build scheduling procedures or procedural constraints, first you will need a completed mission model. You can accomplish this by following the [Aerie Mission Modeling Tutorial](https://nasa-ammos.github.io/aerie-docs/tutorials/mission-modeling/introduction/), or by using the included `complete-model-tutorial.patch`:
 
 ```sh
 git apply complete-model-tutorial.patch
 ```
 
-This is required since scheduling procedures will reference activity types (e.g. when placing activity directives), and the model in this repo, out of the box, has no registered activities.
+This is required since these procedures will reference activity types (e.g. when placing activity directives), and the model in this repo, out of the box, has no registered activities.
 
-Then, copy an example scheduling procedure into the procedures folder.
+Then, copy an example procedure into the scheduling or constraint procedures folder.
 
 ```sh
 cp scheduling/examples/SampleProcedure.java scheduling/src/main/java/scheduling/procedures
 ```
+or
+```sh
+cp constraints/examples/SampleActivityConstraint.java scheduling/src/main/java/constraints/procedures
+```
 
-(For a more involved example procedure, take a look at some [procedures in the Aerie repo](https://github.com/NASA-AMMOS/aerie/blob/develop/procedural/examples/foo-procedures/src/main/java/gov/nasa/ammos/aerie/procedural/examples/fooprocedures/procedures/StayWellFed.java))
+(For more involved example procedures, take a look at some [scheduling procedures in the Aerie repo](https://github.com/NASA-AMMOS/aerie/blob/develop/procedural/examples/foo-procedures/src/main/java/gov/nasa/ammos/aerie/procedural/examples/fooprocedures/procedures/StayWellFed.java) and [constraint procedures in the modeling tutorial]())
 
 The following will be your process every time you iterate on these procedures
 
 ```sh
-./gradlew scheduling:compileJava
-./gradlew scheduling:buildAllSchedulingProcedureJars
+./gradlew scheduling:build
+./gradlew scheduling:buildAllProcedureJars
+```
+or
+
+```sh
+./gradlew constraints:build
+./gradlew constraints:buildAllProcedureJars
 ```
 
-The first `gradle` command will expand `@SchedulingProcedure` annotations into new, verbose source code files that Aerie can process down the line.
+The first `gradle` command will expand `@SchedulingProcedure` or `@ConstraintProcedure` annotations into new, verbose source code files that Aerie can process down the line.
 The second `gradle` command then looks for those generated files, creates a task to build a `.jar` for each file, and then runs all those tasks.
 
-Your procedure jars will then be in `scheduling/build/libs/OriginalSourceCodeFileName.jar`, which in this case will be `scheduling/build/libs/SampleProcedure.jar`.
+Your procedure jars will then be in `build/libs/OriginalSourceCodeFileName.jar` of either the `scheduling` or `constraints` directories
 
 ## Running Procedures
 
 Now that you have `.jar`'s, we need to upload them to Aerie so you can run them against plans.
 
-The quickest way to upload a single JAR is to use the `aerie-ui`. On the `/scheduling/goals/new` page, you should now see a new tab option for creating a `jar` procedural goal. Once created, you will need to register the goal with a specific plan, just like you do with EDSL goals.
+The quickest way to upload a single JAR is to use the `aerie-ui`. On the `/scheduling/goals/new` or `constraints/new` page, you should now see a new tab option for creating a `jar` procedural goal. Once created, you will need to register the procedure with a specific plan or model, just like you do with EDSL goals.
 
-Then, from the manage goals page on your plan, you can pass arguments to your procedure using the drop down menu, and run your procedures using the schedule button. You can also right click to manage invocations (duplicate, delete, etc)
+Then, from the manage goals or constraints page on your plan, you can pass arguments to your procedure using the drop down menu, and run your procedures using the "schedule" or "check constraints" button. You can also right click to manage invocations (duplicate, delete, etc)
 
 ## Testing
 
