@@ -3,6 +3,8 @@ package missionmodel;
 // import gov.nasa.jpl.aerie.contrib.serialization.mappers.DoubleValueMapper;
 // import gov.nasa.jpl.aerie.contrib.streamline.core.MutableResource;
 import gov.nasa.jpl.aerie.contrib.streamline.modeling.Registrar;
+import missionmodel.spice.Spice;
+import spice.basic.SpiceErrorException;
 
 import static gov.nasa.jpl.aerie.merlin.framework.ModelActions.spawn;
 // import gov.nasa.jpl.aerie.contrib.streamline.modeling.discrete.Discrete;
@@ -39,6 +41,14 @@ public final class Mission {
 
     // Example daemon task call
     // spawn(dataModel::integrateDataRate);
+
+    // Example SPICE Integration
+    //try {
+    //  Spice.initialize('path/to/metakernel.tm');
+    //}
+    //catch (SpiceErrorException e) {
+    //  System.out.println(e.getMessage());
+    //}
 
   }
 }
