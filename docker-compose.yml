@@ -60,11 +60,13 @@ services:
         -Dorg.slf4j.simpleLogger.defaultLogLevel=WARN
         -Dorg.slf4j.simpleLogger.logFile=System.err
       UNTRUE_PLAN_START: "2000-01-01T11:58:55.816Z"
+      SPICE_DIRECTORY: /usr/src/app/spice/kernels
     image: "${REPOSITORY_DOCKER_URL}/aerie-merlin:${DOCKER_TAG}"
     ports: ["27183:27183"]
     restart: always
     volumes:
       - aerie_file_store:/usr/src/app/merlin_file_store
+      - $PWD/spice/kernels:/usr/src/app/spice/kernels
     networks:
       - aerie_net
   aerie_merlin_worker_1:
@@ -82,11 +84,13 @@ services:
         -Dorg.slf4j.simpleLogger.log.com.zaxxer.hikari=WARN
         -Dorg.slf4j.simpleLogger.logFile=System.err
       UNTRUE_PLAN_START: "2000-01-01T11:58:55.816Z"
+      SPICE_DIRECTORY: /usr/src/app/spice/kernels
     image: "${REPOSITORY_DOCKER_URL}/aerie-merlin-worker:${DOCKER_TAG}"
     ports: ["27187:8080"]
     restart: always
     volumes:
       - aerie_file_store:/usr/src/app/merlin_file_store:ro
+      - $PWD/spice/kernels:/usr/src/app/spice/kernels
     networks:
       - aerie_net
   aerie_scheduler:
@@ -103,11 +107,13 @@ services:
       JAVA_OPTS: >
         -Dorg.slf4j.simpleLogger.defaultLogLevel=WARN
         -Dorg.slf4j.simpleLogger.logFile=System.err
+      SPICE_DIRECTORY: /usr/src/app/spice/kernels
     image: "${REPOSITORY_DOCKER_URL}/aerie-scheduler:${DOCKER_TAG}"
     ports: ["27185:27185"]
     restart: always
     volumes:
       - aerie_file_store:/usr/src/app/merlin_file_store
+      - $PWD/spice/kernels:/usr/src/app/spice/kernels
     networks:
       - aerie_net
   aerie_scheduler_worker_1:
@@ -126,11 +132,13 @@ services:
       JAVA_OPTS: >
         -Dorg.slf4j.simpleLogger.log.com.zaxxer.hikari=INFO
         -Dorg.slf4j.simpleLogger.logFile=System.err
+      SPICE_DIRECTORY: /usr/src/app/spice/kernels
     image: "${REPOSITORY_DOCKER_URL}/aerie-scheduler-worker:${DOCKER_TAG}"
     ports: ["27189:8080"]
     restart: always
     volumes:
       - aerie_file_store:/usr/src/app/merlin_file_store:ro
+      - $PWD/spice/kernels:/usr/src/app/spice/kernels
     networks:
       - aerie_net
   aerie_sequencing:
