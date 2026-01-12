@@ -4,11 +4,28 @@ This repo provides a basic template for getting started with mission modeling an
 
 Included in this repo is all the basic infrastructure and scaffolding required to generate a mission model `.jar` file, as well as scheduling procedure `.jar`s that can be uploaded and run within PlanDev.
 
+## Aerie -> PlanDev Rebrand
+
+This product was **formerly known as Aerie and is now named PlanDev**. While we've updated most documentation and external references, some legacy mentions of the old product name may remain as we complete the transition.
+
+What to know:
+
+- The planning product, including modeling, simulation, scheduling and constraint-checking, is now named PlanDev
+- The sequencing product, including the sequence editor, workspaces, and actions, is now named SeqDev
+- All features and functionality remain the same
+- Currently, repository names, package names and other internal code references will retain their existing names, and deployment/migration procedures have not changed
+- In a future release, our repository and/or package names may change. If so, this will be communicated to users via release notes and normal communication channels
+
+For the latest documentation, visit: [PlanDev Documentation](https://nasa-ammos.github.io/plandev-docs/)
+
 #### Interested in learning how to develop a model yourself?
+
 Check out the [PlanDev Mission Modeling Tutorial](https://nasa-ammos.github.io/plandev-docs/tutorials/mission-modeling/introduction/)
 
 #### Looking for some example models to play around with?
+
 Try out the following models:
+
 - [Simple Power Model](https://github.com/NASA-AMMOS/aerie-simple-model-power)
 - [Tutorial Model](https://github.com/NASA-AMMOS/aerie-modeling-tutorial)
 - Simple Data Model (coming soon)
@@ -36,6 +53,7 @@ Try out the following models:
 ## Building
 
 ### Mission Model
+
 To build a mission model JAR you can do:
 
 ```sh
@@ -47,6 +65,7 @@ This will create the file `'missionmodel/build/libs/missionmodel.jar`, which you
 <!-- If you want to just try the model without building it yourself you can [download it here](./missionmodel.jar). -->
 
 ### Scheduling Procedures and Constraints
+
 To build scheduling procedures or procedural constraints, first you will need a completed mission model. You can accomplish this by following the [PlanDev Mission Modeling Tutorial](https://nasa-ammos.github.io/plandev-docs/tutorials/mission-modeling/introduction/), or by using the included `complete-model-tutorial.patch`:
 
 ```sh
@@ -60,7 +79,9 @@ Then, copy an example procedure into the scheduling or constraint procedures fol
 ```sh
 cp scheduling/examples/SampleProcedure.java scheduling/src/main/java/scheduling/procedures
 ```
+
 or
+
 ```sh
 cp constraints/examples/SampleActivityConstraint.java scheduling/src/main/java/constraints/procedures
 ```
@@ -73,6 +94,7 @@ The following will be your process every time you iterate on these procedures
 ./gradlew scheduling:build
 ./gradlew scheduling:buildAllProcedureJars
 ```
+
 or
 
 ```sh
