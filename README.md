@@ -65,7 +65,7 @@ or
 cp constraints/examples/SampleActivityConstraint.java scheduling/src/main/java/constraints/procedures
 ```
 
-(For more involved example procedures, take a look at some [scheduling procedures in the PlanDev repo](https://github.com/NASA-AMMOS/aerie/blob/develop/procedural/examples/foo-procedures/src/main/java/gov/nasa/ammos/aerie/procedural/examples/fooprocedures/procedures/StayWellFed.java) and [constraint procedures in the modeling tutorial]())
+(For more involved example procedures, take a look at some [scheduling procedures in the PlanDev repo](https://github.com/NASA-AMMOS/plandev/blob/develop/procedural/examples/foo-procedures/src/main/java/gov/nasa/ammos/plandev/procedural/examples/fooprocedures/procedures/StayWellFed.java) and [constraint procedures in the modeling tutorial]())
 
 The following will be your process every time you iterate on these procedures
 
