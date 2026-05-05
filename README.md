@@ -62,7 +62,7 @@ cp scheduling/examples/SampleProcedure.java scheduling/src/main/java/scheduling/
 ```
 or
 ```sh
-cp constraints/examples/SampleActivityConstraint.java scheduling/src/main/java/constraints/procedures
+cp constraints/examples/SampleActivityConstraint.java scheduling/src/main/java/scheduling/constraints
 ```
 
 (For more involved example procedures, take a look at some [scheduling procedures in the PlanDev repo](https://github.com/NASA-AMMOS/plandev/blob/develop/procedural/examples/foo-procedures/src/main/java/gov/nasa/ammos/plandev/procedural/examples/fooprocedures/procedures/StayWellFed.java) and [constraint procedures in the modeling tutorial]())
