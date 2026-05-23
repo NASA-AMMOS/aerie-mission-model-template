@@ -22,7 +22,7 @@ dependencies {
   implementation "gov.nasa.ammos.aerie.procedural:constraints:" + project.aerieVersion
 
   // standard aerie deps
-  implementation 'gov.nasa.jpl.aerie:merlin-framework:' + project.aerieVersion
+  implementation 'gov.nasa.jpl.aerie:merlin-sdk:' + project.aerieVersion
   implementation 'gov.nasa.jpl.aerie:contrib:' + project.aerieVersion
   implementation 'gov.nasa.jpl.aerie:type-utils:' + project.aerieVersion
 
